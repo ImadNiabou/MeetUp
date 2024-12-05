@@ -1,14 +1,15 @@
-import { View, Text, Image, ScrollView } from 'react-native';
+import { View, Text, Image, Pressable } from 'react-native';
 import React from 'react';
 // icons
 import Feather from '@expo/vector-icons/Feather';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 // import day js
 import dayjs from 'dayjs';
+import { Link } from 'expo-router';
 const EventListItem = ({ event }) => {
   return (
-    <View>
-      <View className="m-2 rounded-lg bg-white p-3">
+    <Link href={`/${event.id}`} asChild>
+      <Pressable className="m-2 rounded-lg bg-white p-3 ">
         <View className="flex-row justify-between ">
           <View>
             <Text className="text-semibold text-lg text-amber-800">
@@ -17,6 +18,7 @@ const EventListItem = ({ event }) => {
               {dayjs(event.datetime).format('h:mm A')}
             </Text>
             <Text className="mb-2 max-w-[230px] text-2xl font-bold">{event.title}</Text>
+
             <Text>{event.location}</Text>
           </View>
           {/* event image */}
@@ -32,8 +34,8 @@ const EventListItem = ({ event }) => {
             <MaterialIcons name="bookmark-outline" size={24} color="gray" />
           </View>
         </View>
-      </View>
-    </View>
+      </Pressable>
+    </Link>
   );
 };
 

@@ -1,16 +1,20 @@
 import { View, Text, Image } from 'react-native';
 import React from 'react';
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, Stack } from 'expo-router';
 import events from '../assets/events.json';
+
+import EventCard from '~/components/EventCard';
 const event = () => {
   const { id } = useLocalSearchParams();
-
   const event = events.find((e) => e.id === id);
+  if (!event) {
+    return <Text>Event not found</Text>;
+  }
   return (
-    <View>
-      <Text>Event title: {event?.title}</Text>
-      <Image className="aspect-ratio h-[90px] w-1/3 rounded-lg" source={{ uri: event.image }} />
-    </View>
+    <>
+      <Stack.Screen options={{ title: 'Event' }} />
+      <EventCard event={event} />
+    </>
   );
 };
 

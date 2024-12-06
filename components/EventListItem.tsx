@@ -1,5 +1,4 @@
 import { View, Text, Image, Pressable } from 'react-native';
-import React from 'react';
 // icons
 import Feather from '@expo/vector-icons/Feather';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';

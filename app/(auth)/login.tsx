@@ -1,5 +1,6 @@
+import { Stack } from 'expo-router';
 import React, { useState } from 'react';
-import { Alert, View, AppState, TextInput, Button, StyleSheet } from 'react-native';
+import { Alert, View, AppState, TextInput, Pressable, Text } from 'react-native';
 import { supabase } from '~/utils/supabase';
 
 // Tells Supabase Auth to continuously refresh the session automatically if
@@ -46,47 +47,39 @@ export default function Auth() {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={[styles.verticallySpaced, styles.mt20]}>
-        <TextInput
-          label="Email"
-          onChangeText={(text) => setEmail(text)}
-          value={email}
-          placeholder="email@address.com"
-          autoCapitalize={'none'}
-        />
-      </View>
-      <View style={styles.verticallySpaced}>
-        <TextInput
-          label="Password"
-          onChangeText={(text) => setPassword(text)}
-          value={password}
-          secureTextEntry={true}
-          placeholder="Password"
-          autoCapitalize={'none'}
-        />
-      </View>
-      <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Button title="Sign in" disabled={loading} onPress={() => signInWithEmail()} />
-      </View>
-      <View style={styles.verticallySpaced}>
-        <Button title="Sign up" disabled={loading} onPress={() => signUpWithEmail()} />
+    <View className="flex-1 gap-3 p-5 pt-10">
+      <Stack.Screen options={{ title: 'Sign in' }} />
+      <TextInput
+        className="rounded-md border border-gray-400 p-3"
+        label="Email"
+        onChangeText={(text) => setEmail(text)}
+        value={email}
+        placeholder="email@address.com"
+        autoCapitalize={'none'}
+      />
+      <TextInput
+        label="Password"
+        className="rounded-md border border-gray-400 p-3"
+        onChangeText={(text) => setPassword(text)}
+        value={password}
+        secureTextEntry={true}
+        placeholder="Password"
+        autoCapitalize={'none'}
+      />
+      <View className="flex-row gap-2">
+        <Pressable
+          className="flex-1 rounded-lg border border-red-400 p-5"
+          disabled={loading}
+          onPress={() => signInWithEmail()}>
+          <Text className="text-center text-lg font-semibold text-red-400">Sign In</Text>
+        </Pressable>
+        <Pressable
+          className="flex-1 rounded-lg bg-red-400 p-5 text-white "
+          disabled={loading}
+          onPress={() => signUpWithEmail()}>
+          <Text className="text-center text-lg font-semibold text-white">Sign Up</Text>
+        </Pressable>
       </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 40,
-    padding: 12,
-  },
-  verticallySpaced: {
-    paddingTop: 4,
-    paddingBottom: 4,
-    alignSelf: 'stretch',
-  },
-  mt20: {
-    marginTop: 20,
-  },
-});

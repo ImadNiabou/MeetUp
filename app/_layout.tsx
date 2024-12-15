@@ -1,5 +1,5 @@
 import '../global.css';
-
+import AuthProvider from '../contexts/AuthProvider';
 import { Stack } from 'expo-router';
 
 export const unstable_settings = {
@@ -9,9 +9,12 @@ export const unstable_settings = {
 
 export default function RootLayout() {
   return (
-    <Stack>
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-    </Stack>
+    <AuthProvider>
+      <Stack>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+      </Stack>
+    </AuthProvider>
   );
 }

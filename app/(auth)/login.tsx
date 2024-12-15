@@ -1,8 +1,7 @@
-import { Stack } from 'expo-router';
+import { Link, Stack } from 'expo-router';
 import React, { useState } from 'react';
 import { Alert, View, AppState, TextInput, Pressable, Text } from 'react-native';
 import { supabase } from '~/utils/supabase';
-
 // Tells Supabase Auth to continuously refresh the session automatically if
 // the app is in the foreground. When this is added, you will continue to receive
 // `onAuthStateChange` events with the `TOKEN_REFRESHED` or `SIGNED_OUT` event
@@ -80,6 +79,11 @@ export default function Auth() {
           <Text className="text-center text-lg font-semibold text-white">Sign Up</Text>
         </Pressable>
       </View>
+      <Pressable className="rounded-lg bg-red-200 p-5 text-white " disabled={loading}>
+        <Link href="/">
+          <Text className="text-center text-lg font-semibold text-white">Home</Text>
+        </Link>
+      </Pressable>
     </View>
   );
 }

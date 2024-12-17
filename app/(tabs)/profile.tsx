@@ -9,6 +9,7 @@ import { supabase } from '~/utils/supabase';
 export default function Profile() {
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState('');
+  const [fullName, setFullName] = useState('');
   const [website, setWebsite] = useState('');
   const [avatarUrl, setAvatarUrl] = useState('');
 
@@ -24,7 +25,7 @@ export default function Profile() {
 
       const { data, error, status } = await supabase
         .from('profiles')
-        .select(`username, website, avatar_url`)
+        .select(`username, website, avatar_url, full_name`)
         .eq('id', session?.user.id)
         .single();
       if (error && status !== 406) {
@@ -35,6 +36,7 @@ export default function Profile() {
         setUsername(data.username);
         setWebsite(data.website);
         setAvatarUrl(data.avatar_url);
+        setFullName(data.full_name);
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -46,6 +48,7 @@ export default function Profile() {
   }
   async function updateProfile({
     username,
+    full_name,
     website,
     avatar_url,
   }: {
@@ -60,6 +63,7 @@ export default function Profile() {
       const updates = {
         id: session?.user.id,
         username,
+        full_name,
         website,
         avatar_url,
         updated_at: new Date(),
@@ -99,6 +103,14 @@ export default function Profile() {
         autoCapitalize={'none'}
       />
       <TextInput
+        className="rounded-md border border-gray-500 p-3"
+        label="Email"
+        onChangeText={(text) => setFullName(text)}
+        value={fullName}
+        placeholder="full name"
+        autoCapitalize={'none'}
+      />
+      <TextInput
         className="rounded-md border border-gray-400 p-3"
         label="Email"
         onChangeText={(text) => setWebsite(text)}
@@ -109,8 +121,10 @@ export default function Profile() {
       <Pressable
         className="rounded-lg border border-red-400 p-4 "
         disabled={loading}
-        onPress={() => updateProfile({ username, website, avatar_url: avatarUrl })}>
-        <Text className="text-center text-lg font-semibold text-red-400">Sign In</Text>
+        onPress={() =>
+          updateProfile({ username, website, avatar_url: avatarUrl, full_name: fullName })
+        }>
+        <Text className="text-center text-lg font-semibold text-red-400">Save</Text>
       </Pressable>
       <Pressable className="rounded-xl bg-red-400 p-4 px-8" onPress={() => supabase.auth.signOut()}>
         <Text className="text-center text-xl font-semibold text-white"> Sign out</Text>

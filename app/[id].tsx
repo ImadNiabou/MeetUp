@@ -1,15 +1,34 @@
-import { View, Text, Image } from 'react-native';
-import React from 'react';
 import { useLocalSearchParams, Stack } from 'expo-router';
-import events from '../assets/events.json';
+import React, { useEffect, useState } from 'react';
+import { Text } from 'react-native';
 
 import EventCard from '~/components/EventCard';
-const event = () => {
+import Skeleton from '~/components/Skeleton';
+import { supabase } from '~/utils/supabase';
+
+const Event = () => {
   const { id } = useLocalSearchParams();
-  const event = events.find((e) => e.id === id);
-  if (!event) {
-    return <Text>Event not found</Text>;
-  }
+  const [event, setEvent] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchEvent();
+  }, [id]);
+
+  const fetchEvent = async () => {
+    setLoading(true);
+    const { data, error } = await supabase.from('events').select('*').eq('id', id).single();
+
+    // Simulate loading delay
+    setTimeout(() => {
+      setEvent(data);
+      setLoading(false);
+    }, 100);
+  };
+
+  if (loading) return <Skeleton />;
+  if (!event) return <Text>Event not found</Text>;
+
   return (
     <>
       <Stack.Screen options={{ title: 'Event' }} />
@@ -18,4 +37,4 @@ const event = () => {
   );
 };
 
-export default event;
+export default Event;

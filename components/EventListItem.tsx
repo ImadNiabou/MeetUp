@@ -10,10 +10,10 @@ import { Link } from 'expo-router';
 const EventListItem = ({ event }) => {
   return (
     <Link href={`/${event.id}`} asChild>
-      <Pressable className="m-2 rounded-lg bg-white p-3 ">
+      <Pressable className="p-3 m-2 bg-white rounded-lg ">
         <View className="flex-row justify-between ">
           <View>
-            <Text className="text-semibold text-lg text-amber-800">
+            <Text className="text-lg text-semibold text-amber-800">
               {/* Format time white dayJS */}
               {dayjs(event.datetime).format('dddd, D, MMM')} ·{' '}
               {dayjs(event.datetime).format('h:mm A')}
@@ -28,7 +28,7 @@ const EventListItem = ({ event }) => {
         </View>
 
         {/* footer */}
-        <View className="mt-5 flex-row justify-between">
+        <View className="flex-row justify-between mt-5">
           <Text>14 going</Text>
           <View className="flex-row gap-2">
             <Feather name="share" size={24} color="gray" />

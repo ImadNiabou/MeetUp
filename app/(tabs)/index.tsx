@@ -1,5 +1,5 @@
 import { Stack } from 'expo-router';
-import { View, Text, Image, FlatList, Pressable, Button } from 'react-native';
+import { FlatList } from 'react-native';
 import EventListItem from '~/components/EventListItem';
 import events from '../../assets/events.json';
 export default function Events() {

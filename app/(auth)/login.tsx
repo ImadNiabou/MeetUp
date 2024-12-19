@@ -79,11 +79,6 @@ export default function Auth() {
           <Text className="text-center text-lg font-semibold text-white">Sign Up</Text>
         </Pressable>
       </View>
-      <Pressable className="rounded-lg bg-red-200 p-5 text-white " disabled={loading}>
-        <Link href="/">
-          <Text className="text-center text-lg font-semibold text-white">Home</Text>
-        </Link>
-      </Pressable>
     </View>
   );
 }
